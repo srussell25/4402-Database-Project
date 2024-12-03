@@ -7,8 +7,8 @@ const queries = {
 `,
 
 insertCategory: `
-  INSERT INTO Category (name) 
-  VALUES (?);
+  INSERT INTO Category (category_Id, name) 
+  VALUES (?, ?);
 `,
 
 insertAisle: `
@@ -59,6 +59,11 @@ updateItemStock: `
 deleteEmployee: `
   DELETE FROM Employees
   WHERE ID = ?;
+`,
+
+deleteCategory: `
+  DELETE FROM Category
+  WHERE category_Id = ?;
 `,
 
 deleteItem: `
