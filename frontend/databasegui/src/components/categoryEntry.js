@@ -7,7 +7,7 @@ export default function CategoryEntry( {category, handleDeleteCategory} ) {
             <div className="entryArea">
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                     <h2>{category.name}</h2>
-                    <h2>{category.category_Id}</h2>
+                    <h2>ID:{category.category_Id}</h2>
                     <img onClick={() => handleDeleteCategory(category.category_Id)} src={trashIcon} alt="Delete Entry"></img>
                 </div>
             </div>
