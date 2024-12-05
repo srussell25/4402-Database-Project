@@ -16,6 +16,9 @@ Run npm install, then node ./index.js
 Start the frontend
 
 Open a new terminal. It is important you keep the other terminal open!
+
 Run  cd ./4402-Database-Project/frontend/databasegui
+ 
 Run npm install, then npm run start
+
 This should automatically open the React website on your default browser. If not, open the browser then navigate to http://localhost:3000
