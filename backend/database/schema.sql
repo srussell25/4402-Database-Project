@@ -10,7 +10,7 @@ CREATE TABLE Employees (
     salary INTEGER,
     start_date DATE,
     role_name TEXT, 
-    ID INTEGER PRIMARY KEY
+    ID INTEGER PRIMARY KEY AUTOINCREMENT
 );
 
 CREATE TABLE Category ( 
@@ -28,7 +28,7 @@ CREATE TABLE Item (
     name TEXT, 
     price INTEGER, 
     stock_remaining INTEGER, 
-    item_Id INTEGER PRIMARY KEY,
+    item_Id INTEGER PRIMARY KEY AUTOINCREMENT,
     category INTEGER,
     FOREIGN KEY (category) REFERENCES Category(category_Id)
 );

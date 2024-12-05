@@ -5,6 +5,7 @@ import CategoryEntry from './components/categoryEntry';
 import AddEntry from './components/addEntry';
 import ITEMAddEntry from './components/ITEMaddentry';
 import { useState, useEffect } from 'react';
+import { addCategory, addEmployee, deleteCategory, deleteEmployee, getAllCategories, getAllEmployees, updateSalary } from './api/service';
 
 
 // const express = require('express');
@@ -16,30 +17,34 @@ import { useState, useEffect } from 'react';
 function App() {
   const [addEntryOpen, setAddEntryOpen] = useState(false);
   const [ITEMaddEntryOpen, ITEMsetAddEntryOpen] = useState(false);
-  const [data, setData] = useState([]);
+  const [empolyees, setEmployees] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
+  //these are state flags to trigger an upate on the employee and categores list when and entity is created or deleted. 
+  //inserting the employee and categoryData list directly into the dependency array cause an infifnite loop.
+  const [employeeStateFlag, setEmployeesStateFlag] = useState(0);
+  const [categoriesStateFlag, setCategoriesStateFlag] = useState(0);
+
   useEffect(()=>{
-    fetch('http://localhost:3001/api/categories')   
-      .then(response => response.json())
-      .then(data => {
-        console.log('Categories API data:', data); // Check the data structure
+    
+    async function getEmployees(){
+      var data = await getAllEmployees();
+      console.log(data)
+      if(data){
+        setEmployees(data);
+      }
+    }
+    async function getCategories(){
+      var data = await getAllCategories();
+      console.log(data);
+      if(data){
         setCategoryData(data);
-      })
-      .catch(error => console.error('Error fetching data:', error));
-    fetch('http://localhost:3001/api/employees')   
-      .then(response => response.json())
-      .then(data => setData(data))
-      .catch(error => console.error('Error fetching data:', error));
-  },[])
+      }
+    }
+    getEmployees();
+    getCategories();
+  },[ employeeStateFlag, categoriesStateFlag]) 
 
-  // useEffect(()=>{
-  //   fetch('http://localhost:3001/api/categories')   
-  //     .then(response => response.json())
-  //     .then(data => setCategoryData(data))
-  //     .catch(error => console.error('Error fetching data:', error));
-  // }, [])
-
-
+  
   const handleEntryAddClick = () => {
     setAddEntryOpen(true);
   }
@@ -53,6 +58,33 @@ function App() {
     ITEMsetAddEntryOpen(false);
   }
 
+  const handldAddEmployee = async (empolyee) => {
+    await addEmployee(empolyee);
+    setEmployeesStateFlag((state) => state + 1);
+  }
+
+  const handleAddCategory = async (category) => {
+    await addCategory(category);
+    setCategoriesStateFlag((state) => state + 1)
+  }
+
+  const handleDeleteCategory = async (id) => {
+    await deleteCategory(id);
+    setCategoriesStateFlag((state) => state + 1);
+  }
+
+  const handleDeleteEmployee = async (id) => {
+    await deleteEmployee(id);
+    setEmployeesStateFlag((state) => state + 1);
+  }
+
+  const handleUpdateSalary = async (id,salary) => {
+    var raise = salary + 1000;
+    console.log(raise)
+    await updateSalary(id, raise);
+    setEmployeesStateFlag((state) => state + 1);
+  }
+
   return (
     <>
       <div className="centerBox">
@@ -64,8 +96,8 @@ function App() {
             <button onClick={handleEntryAddClick}>+</button>
           </div>
           
-          {data.map((entry) => {
-              return <DatabaseEntry {...entry}/>
+          {empolyees.map((entry, index) => {
+              return <DatabaseEntry key={index} empolyee={entry} handleDeleteEmployee={handleDeleteEmployee} handleAddEmployee={handldAddEmployee} handleUpdateSalary={handleUpdateSalary}/>
             })}
         </div>
         <div className = 'Itementries'> 
@@ -74,13 +106,14 @@ function App() {
             <button onClick={ITEMhandleEntryAddClick}>+</button>
           </div>
           
-          {categoryData.map((entry) => {
-              return <CategoryEntry {...entry}/>
+          {categoryData.map((entry, index) => {
+              return <CategoryEntry key={index} category={entry} handleDeleteCategory={handleDeleteCategory} />
             })}
         </div>
       </div>
-      {addEntryOpen && <AddEntry closeAddJob={handleEntryAddClose} />}
-      {ITEMaddEntryOpen && <ITEMAddEntry closeAddJob={ITEMhandleEntryAddClose} />}
+      {/* adding entity functionality */}
+      {addEntryOpen && <AddEntry closeAddJob={handleEntryAddClose} handldAddEmployee={handldAddEmployee}/>}
+      {ITEMaddEntryOpen && <ITEMAddEntry closeAddJob={ITEMhandleEntryAddClose} handleAddCategory={handleAddCategory}/>}
     </>
   );
 }
