@@ -14,6 +14,7 @@ Run cd ./4402-Database-Project/backend
 Run npm install, then node ./index.js
 
 Start the frontend
+
 Open a new terminal. It is important you keep the other terminal open!
 Run  cd ./4402-Database-Project/frontend/databasegui
 Run npm install, then npm run start
