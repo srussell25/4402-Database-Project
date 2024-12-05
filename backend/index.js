@@ -12,19 +12,22 @@ app.use(
   })
 );
 
-app.get("/api/categories", async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  const rows = await db.all(queries.getAllCategories, []);
+
+app.get('/api/categories', async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  console.log("Getting all categories")
+  const rows = await db.all(queries.getAllCategories, [])
   res.send(`${JSON.stringify(rows)}`);
 });
 
-app.get("/api/employees", async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  const rows = await db.all(queries.getAllEmployees, []);
+app.get('/api/employees', async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  console.log("Getting all employeess")
+  const rows = await db.all(queries.getAllEmployees, [])
   res.send(`${JSON.stringify(rows)}`);
 });
 
@@ -33,45 +36,43 @@ app.delete("/api/deleteEmployee/:id", async (req, res) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   const employeeId = parseInt(req.params.id, 10); // Extract employee ID from the route parameter
-  await db.all(queries.deleteEmployee, [employeeId]);
-  const rows = await db.all(queries.getAllEmployees, []);
+  console.log("Deleting employee: ", employeeId)
+  await db.all(queries.deleteEmployee, [employeeId])
+  const rows = await db.all(queries.getAllEmployees, [])
   res.send(`${JSON.stringify(rows)}`);
 });
 
-app.delete("/api/deleteCategory/:id", async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  const employeeId = parseInt(req.params.id, 10); // Extract employee ID from the route parameter
-  await db.all(queries.deleteCategory, [employeeId]);
-  const rows = await db.all(queries.getAllCategories, []);
+app.delete('/api/deleteCategory/:id', async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');  
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  const id = parseInt(req.params.id, 10); 
+  console.log("Deleting category: ", id)
+  await db.all(queries.deleteCategory, [id])
+  const rows = await db.all(queries.getAllCategories, [])
   res.send(`${JSON.stringify(rows)}`);
 });
 
-app.put("/api/updateEmployeeSalary/:id", async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  const { raise } = req.body;
-  const employeeId = parseInt(req.params.id, 10);
-  await db.run(queries.updateEmployeeSalary, [raise, employeeId]);
+app.put('/api/updateEmployeeSalary/:id', async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); 
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  const { raise } = req.body; 
+  console.log("Update salary: ", req.body)
+  const employeeId = parseInt(req.params.id, 10); 
+  await db.run(queries.updateEmployeeSalary, [raise, employeeId])
   res.json({ message: `New Salary : ${raise}` });
 });
 
-app.post("/api/addEmployee", async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  const { name, dob, salary, start_date, role_name, ID } = req.body;
-  await db.run(queries.insertEmployee, [
-    name,
-    dob,
-    salary,
-    start_date,
-    role_name,
-    ID,
-  ]);
-  res.send(`New Employee Added to DB`);
+
+app.post('/api/addEmployee', async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); 
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  console.log("Adding employee: ", req.body)
+  const {name,dob, salary, start_date,role_name,ID} = req.body;
+  await db.run(queries.insertEmployee, [name, dob, salary,start_date, role_name, ID]);
+  res.send(`New Employee Added to DB` );
 });
 
 app.post("/api/addCategory", async (req, res) => {
