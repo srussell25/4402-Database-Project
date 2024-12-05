@@ -11,6 +11,7 @@ In your terminal, change directories to your desired install location, then type
 
 Run the backend
 Run cd ./4402-Database-Project/backend
+
 Run npm install, then node ./index.js
 
 Start the frontend
