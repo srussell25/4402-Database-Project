@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import trashIcon from "./trash-xmark.png"
+import trashIcon from "./trash-xmark.png";
 
 export default function CategoryEntry( {category, handleDeleteCategory} ) {
     
@@ -16,3 +15,4 @@ export default function CategoryEntry( {category, handleDeleteCategory} ) {
         </>
     )
 }
+

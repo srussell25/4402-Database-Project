@@ -1,3 +1,4 @@
+
 import logo from './logo.svg';
 import './App.css';
 import DatabaseEntry from './components/databaseEntry';
@@ -44,19 +45,18 @@ function App() {
     getCategories();
   },[ employeeStateFlag, categoriesStateFlag]) 
 
-  
   const handleEntryAddClick = () => {
     setAddEntryOpen(true);
-  }
+  };
   const ITEMhandleEntryAddClick = () => {
     ITEMsetAddEntryOpen(true);
-  }
+  };
   const handleEntryAddClose = () => {
     setAddEntryOpen(false);
-  }
-   const ITEMhandleEntryAddClose = () => {
+  };
+  const ITEMhandleEntryAddClose = () => {
     ITEMsetAddEntryOpen(false);
-  }
+  };
 
   const handldAddEmployee = async (empolyee) => {
     await addEmployee(empolyee);
@@ -88,20 +88,20 @@ function App() {
   return (
     <>
       <div className="centerBox">
-          <h1>Grocery Goblins</h1>
+        <h1>Grocery Goblins</h1>
 
-        <div className='entries'>
-          <div className='header'>
+        <div className="entries">
+          <div className="header">
             <h1>Employees:</h1>
             <button onClick={handleEntryAddClick}>+</button>
           </div>
-          
           {empolyees.map((entry, index) => {
               return <DatabaseEntry key={index} empolyee={entry} handleDeleteEmployee={handleDeleteEmployee} handleAddEmployee={handldAddEmployee} handleUpdateSalary={handleUpdateSalary}/>
             })}
+
         </div>
-        <div className = 'Itementries'> 
-          <div className='header'>
+        <div className="Itementries">
+          <div className="header">
             <h1>Items:</h1>
             <button onClick={ITEMhandleEntryAddClick}>+</button>
           </div>
@@ -114,6 +114,7 @@ function App() {
       {/* adding entity functionality */}
       {addEntryOpen && <AddEntry closeAddJob={handleEntryAddClose} handldAddEmployee={handldAddEmployee}/>}
       {ITEMaddEntryOpen && <ITEMAddEntry closeAddJob={ITEMhandleEntryAddClose} handleAddCategory={handleAddCategory}/>}
+
     </>
   );
 }
