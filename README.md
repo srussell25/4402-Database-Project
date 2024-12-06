@@ -10,7 +10,8 @@ Running the project
 In your terminal, change directories to your desired install location, then type git clone https://github.com/srussell25/4402-Database-Project.git (if you don't have the files already)
 
 Run the backend
-Run cd ./4402-Database-Project/backend
+
+Run cd ./4402-Database-Project/backend or cd backend if you are already in the project directory
 
 Run npm install, then node ./index.js
 
@@ -18,7 +19,7 @@ Start the frontend
 
 Open a new terminal. It is important you keep the other terminal open!
 
-Run  cd ./4402-Database-Project/frontend/databasegui
+Run  cd ./4402-Database-Project/frontend/databasegui or frontend/databasegui if you are already in the project directory
  
 Run npm install, then npm run start
 
